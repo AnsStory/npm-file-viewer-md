@@ -1,4 +1,4 @@
-# 简介
+# 简介[docs](https://ansstory.github.io/npm-file-viewer-md/)
 
 > - 支持多种文件: `png,apng,bmp,jpg,jpe,jpeg,gif,svg,webp,heif,mp4,webm,mov,docx,xlsx,pdf,pptx`预览的vue3组件
 > - 其中`docx,xlsx,pdf,ppt`来自大佬[@vue-office](https://github.com/501351981/vue-office)
@@ -48,28 +48,32 @@ app.use(FileViewer, {
 
 ```html
 <script setup lang="ts">
-  // 或者 单文件引入
-  import { FileViewer } from '@ansstory/file-viewer'
-  import '@ansstory/file-viewer/dist/file-viewer.css'
+  // 或者 单文件导入
   import { ref, useTemplateRef } from 'vue'
+  import { FileViewer, type IFileViewerInstance } from '@ansstory/file-viewer'
+  import '@ansstory/file-viewer/dist/file-viewer.css'
   // 逗号分割的字符串
-  // const fileList = ref('https://test-jpfile1.oss-cn-shenzhen.aliyuncs.com/Bom/bom/2022/1/19/2022011911370824626513.pdf')
+  // const fileList = ref('https://test-jpfile1.oss-cn-shenzhen.aliyuncs.com/Bom/bom/2022/1/19/2022011911370824626513.pdf,https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg,https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg,https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg,https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg,https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg,https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg,https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg')
   // 或者
-  const fileList = ref(['https://test-jpfile1.oss-cn-shenzhen.aliyuncs.com/Bom/bom/2022/1/19/2022011911370824626513.pdf'])
-  const FileViewerRef = useTemplateRef('FileViewerRef')
+  const fileList = ref([
+    'https://test-jpfile1.oss-cn-shenzhen.aliyuncs.com/Bom/bom/2022/1/19/2022011911370824626513.pdf',
+    'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',
+    'https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg',
+    'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg',
+    'https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg',
+    'https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg',
+    'https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg',
+    'https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg',
+  ])
+  const fileViewerRef = useTemplateRef<IFileViewerInstance>('fileViewerRef')
   const openFileViewer = () => {
-    FileViewerRef.value?.open()
-  }
-  const displayFileName = (url) => {
-    const fileName = url?.split('/')?.pop()
-    return fileName?.replace(/_.*?\./, '.') || url
+    fileViewerRef.value?.open()
   }
 </script>
 
 <template>
-  <button type="primary" @click="openFileViewer">open</button>
-  <!-- ! props将覆盖全局配置 -->
-  <FileViewer ref="FileViewerRef" :urls="fileList" fileApi="/zzz" :maxScale="8" :displayFileName="displayFileName" />
+  <button @click="openFileViewer">打开</button>
+  <FileViewer ref="fileViewerRef" :urls="fileList" />
 </template>
 ```
 
